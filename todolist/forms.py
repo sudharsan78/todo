@@ -1,6 +1,7 @@
 from django import forms
+from .models import Todo
 
-
-
-class WrkForm(forms.Form):
+class TodoForm(forms.ModelForm):
     works=forms.CharField(max_length=100)
+    
+	

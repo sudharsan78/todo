@@ -1,0 +1,18 @@
+<form action="{% url 'todolist:add_work' %}" method="post">
+    {% csrf_token %}
+
+        <input type='text' name='work'><br>
+        <input type="submit" value="Submit" /><br><br>
+
+</form>
+
+{% if work_info %}
+    <ul>
+    {% for let in work_info %}
+        <li>{{ let.work_list }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No works are available.</p>
+{% endif %}
+
