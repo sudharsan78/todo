@@ -6,10 +6,10 @@
 
 </form>
 
-{% if work_info %}
+{% if todo_list %}
     <ul>
-    {% for let in work_info %}
-        <li>{{ let.work_list }}</li>
+    {% for let in todo_list %}
+        <li>{{ let.task }}</li>
     {% endfor %}
     </ul>
 {% else %}

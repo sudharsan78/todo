@@ -9,16 +9,16 @@ from django.core.urlresolvers import reverse
 
 def index(request):
     latest_work_list = Todo.objects.all()
-    context = {'work_info': latest_work_list}
+    context = {'todo_list': latest_work_list}
     return render(request, 'todolist/index.html', context)
 
-
+    	
 
 def add_work(request):
-    if request.method=="POST":
-	temp_work=request.POST.get("work","")
-        new_work=Todo(work_list=temp_work)
-	new_work.save()
+    if request.method == "POST":
+        temp_work = request.POST.get("work", "")
+        new_work = Todo(task = temp_work)
+        new_work.save()
     return HttpResponseRedirect(reverse('todolist:index'))
     
 

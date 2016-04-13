@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User, Group
+from rest_framework import serializers
 
 class Todo(models.Model):
-    work_list=models.CharField(max_length=100, unique=True)
+    task = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return self.work_list
 	class Meta:
-	    ordering=['work_list']
+	    ordering = ['task']
 				
