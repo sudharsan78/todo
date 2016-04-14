@@ -22,3 +22,19 @@ def add_work(request):
     return HttpResponseRedirect(reverse('todolist:index'))
     
 
+def work_done(request, pk):
+    finesh= Todo.objects.get(pk = pk)
+    finesh.completed = True
+    finesh.save()
+    return HttpResponseRedirect(reverse('todolist:index'))
+
+def not_done(request, pk):
+    finesh= Todo.objects.get(pk = pk)
+    finesh.completed = False
+    finesh.save()
+    return HttpResponseRedirect(reverse('todolist:index'))
+
+def remove_work(request, pk):
+    remove= Todo.objects.get(pk = pk)
+    remove.delete()
+    return HttpResponseRedirect(reverse('todolist:index'))

@@ -9,10 +9,28 @@
 {% if todo_list %}
     <ul>
     {% for let in todo_list %}
-        <li>{{ let.task }}</li>
+	
+        
+{% if not let.completed %}
+<li>
+	{{ let.task }}
+	<a href = "{% url 'todolist:work_done' pk=let.id %}"><button>Done</button></a>
+	<a href = "{% url 'todolist:not_done' pk=let.id %}"><button>Not Done</button></a>
+        <a href = "{% url 'todolist:remove_work' pk=let.id %}"><button>remove</button></a>
+</li>
+{% elif let.completed %}
+<li>
+	<strike>{{ let.task }}</strike>
+	<a href = "{% url 'todolist:work_done' pk=let.id %}"><button>Done</button></a>
+	<a href = "{% url 'todolist:not_done' pk=let.id %}"><button>Not Done</button></a>
+	<a href = "{% url 'todolist:remove_work' pk=let.id %}"><button>remove</button></a>
+</li>
+{% endif %}
     {% endfor %}
+
     </ul>
 {% else %}
     <p>No works are available.</p>
 {% endif %}
+
 
