@@ -1,5 +1,5 @@
-#from todolist.serializers import TodoSerializer
-#from rest_framework import generics
+from todolist.serializers import TodoSerializer
+from rest_framework import generics
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,9 +7,10 @@ from django.shortcuts import render_to_response
 from .models import Todo
 from django.core.urlresolvers import reverse
 
-#class TodoAPIView(generics.ListCreateAPIView):
-#    queryset = Todo.objects.all()
-#    serializer_class = TodoSerializer
+class TodoAPIView(generics.ListCreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
 
 
 def index(request):

@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
-    'todoapi.apps.TodoapiConfig',    
     'todolist.apps.TodoListConfig',
     'django.contrib.admin',
     'django.contrib.auth',
