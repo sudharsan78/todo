@@ -6,8 +6,8 @@ from django.contrib import admin
 
 urlpatterns = [
     
-    url(r'^todolist/', include('todolist.urls')),
+    url(r'^todo/', include('todolist.urls')),
     url(r'^admin/', admin.site.urls),
-    #url(r'^todolist/todoapi/v1/', include('todolist.urls')),  
+    url(r'^api/v1/todo', include('api.urls')),
    
 ]

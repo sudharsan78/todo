@@ -14,12 +14,12 @@ class TodoAPIView(generics.ListCreateAPIView):
 
 
 def index(request):
-    latest_work_list = Todo.objects.all()
-    context = {'todo_list': latest_work_list}
-    return render(request, 'todolist/index.html', context)
+    #latest_work_list = Todo.objects.all()
+    #context = {'todo_list': latest_work_list}
+    return render(request, 'todolist/ab.html')
 
     	
-
+"""
 def add_work(request):
     if request.method == "POST":
         temp_work = request.POST.get("work", "")
@@ -44,3 +44,4 @@ def remove_work(request, pk):
     remove= Todo.objects.get(pk = pk)
     remove.delete()
     return HttpResponseRedirect(reverse('todolist:index'))
+"""
