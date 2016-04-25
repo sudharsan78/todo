@@ -13,6 +13,12 @@
 
 <div id = "taskid">
 
+<script type="text/template" id="addtask-item-tmpl">
+<input></input>
+  <button >Add</button>
+</script>
+
+
 <script type="text/template" id="todotask-item-tmpl">
   <%= id %> <%= task %> (<%= completed %>) <button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
 </script>
