@@ -11,14 +11,17 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
 
 
-<div id = "taskid"></div>
+<div id = "taskid">
 
 <script type="text/template" id="todotask-item-tmpl">
-  <%= task %> (<%= completed %>) 
+  <%= id %> <%= task %> (<%= completed %>) <button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
 </script>
+
+</div>
 
 <script type="text/javascript">
   
+
  var TodoModel = Backbone.Model.extend({
   defaults: {
     task: '',
@@ -28,7 +31,10 @@
 
 var TodoCollection = Backbone.Collection.extend({
   model: TodoModel,
-  url: 'http://localhost:8000/api/v1/todo',
+  url: 'http://localhost:8000/api/v1/todo/',
+  initialize: function(){
+    this.on('delete', this.remove);
+  }
  
 });
 var todocollection = new TodoCollection();
@@ -45,6 +51,15 @@ var TodoItem = Backbone.View.extend({
     });
     this.collection.bind('reset', this.render, this);
   },
+  /*events:{
+    'click #remove_task': 'del_task',
+
+  },
+  del_task: function()
+  {
+    this.model.destroy();
+  },*/
+
   render: function(){
     //var tasklist = this.collection.toJSON();
     console.log(this.collection.toJSON);
@@ -60,12 +75,22 @@ var TodoItem = Backbone.View.extend({
 var TodoListItemView = Backbone.View.extend({
   tagName: 'li',
   template: _.template($("#todotask-item-tmpl").html()),
+  events: {
+    "click #remove_task": 'taskremove'
+  },
 
    render: function() {
     var html = this.template(this.model.toJSON());
     this.$el.html(html);
     return this;
-  }
+  },
+  taskremove: function(task){
+    this.remove();
+    this.model.destroy();
+    this.model.trigger('delete', this.model);
+    //var id = $(task.currentTarget).data('id');
+    //this.collection.remove(id).destroy();
+  },
 });
 
 todocollection.reset();
@@ -87,47 +112,10 @@ var taskview = Backbone.View.extend({
       this.$el.append(task.render().el );
     }
   
-});
-
-
-var TodoView = Backbone.View.extend({
-  tagName: 'li',
-  template: _.template( $('#todotask-item-tmpl').html()),
-
-  initialize: function(){
-    this.render();
-  },
-
-  render: function(){
-    this.$el.html(this.template(this.model.toJSON()));
-  }
 });*/
 
 
-//$(document.body).append(todoitem.render().el);
 
-
-/*
-var TodoListView = Backbone.View.extend({
-  el: '#todo-app',
-
-  initialize: function() {
-    this.listenTo(this.collection, 'sync', this.render);
-  },
-
-  render: function() {
-    var $list = this.$('ul.todo-list').empty();
-
-    this.collection.each(function(model) {
-      var item = new TodoListItemView({model: model});
-      $list.append(item.render().$el);
-    }, this);
-
-    return this;
-  }
-
-
-}); */
 
 </script>
 

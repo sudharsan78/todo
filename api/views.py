@@ -19,3 +19,7 @@ class TodoAPIView(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
     def apiindex(request):
         return render(request, 'todolist/ab.html', queryset)
+
+class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
