@@ -25,7 +25,7 @@ SECRET_KEY = '!+xm3yjc&v!4+2-zot6ddq8(tzey923=itm+d289)-u6lrj+3o'
 # SECURITY WARNING: don't run with debug turned on in production!
 from django.conf import settings
 
-DEBUG = False
+DEBUG = True
 
 DATABASES = settings.DATABASES
 
@@ -73,7 +73,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
