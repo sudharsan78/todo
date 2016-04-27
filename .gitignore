@@ -4,6 +4,7 @@
 *.db
 .env
 venv
+todo/settings/local.py
 
 # ignore editor backup files
 *~

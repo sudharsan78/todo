@@ -16,3 +16,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "todo.settings")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
+
+try:
+	from dj_static import Cling
+
+	application = Cling(get_wsgi_application())
+except:
+	pass
+	
