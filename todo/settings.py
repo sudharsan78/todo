@@ -80,6 +80,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'todo.wsgi.application'
 
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, "static"),
+#    '/todolist/static/',
+#]
+
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
