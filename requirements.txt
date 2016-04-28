@@ -1,6 +1,7 @@
 backports.shutil-get-terminal-size==1.0.0
 decorator==4.0.9
 dj==0.1
+dj-database-url==0.4.1
 Django==1.9.5
 django-filter==0.13.0
 django-oauth2-provider==0.2.6.1
