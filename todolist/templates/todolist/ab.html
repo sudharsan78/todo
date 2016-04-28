@@ -36,7 +36,7 @@
   <script type="text/template" id="item-template">
     <div class="view">
       <input class="toggle" type="checkbox">
-      <label><%= task %></label>
+      <label><%= task %></label><button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
     </div>
   </script>  
 
@@ -53,12 +53,12 @@
   <script type="text/javascript">
     'use strict';
 
-    var app = {}; // create namespace for our app
+     // create namespace for our app
     
     //--------------
     // Models
     //--------------
-    app.Todo = Backbone.Model.extend({
+    var Todo = Backbone.Model.extend({
       defaults: {
         task: '',
         completed: false
@@ -68,36 +68,49 @@
     //--------------
     // Collections
     //--------------
-    app.TodoList = Backbone.Collection.extend({
-      model: app.Todo,
+    var TodoList = Backbone.Collection.extend({
+      model: Todo,
       url: '/api/v1/todo/',
     });
 
     // instance of the Collection
-    app.todoList = new app.TodoList();
+    var todoList = new TodoList();
 
     //--------------
     // Views
     //--------------
     
     // renders individual todo items list (li)
-    app.TodoView = Backbone.View.extend({
+    var TodoView = Backbone.View.extend({
       tagName: 'li',
       template: _.template($('#item-template').html()),
+
+      initialize: function () {
+      	this.model.on('destroy', this.remove, this);
+      },
+
+       events: {
+    "click #remove_task": 'taskremove',
+    },
       render: function(){
         this.$el.html(this.template(this.model.toJSON()));
         return this; // enable chained calls
-      }
+    },
+    taskremove: function(){
+    	this.model.destroy();
+    },
+
     });
 
     // renders the full list of todo items calling TodoView for each one.
-    app.AppView = Backbone.View.extend({
+    var AppView = Backbone.View.extend({
       el: '#todoapp',
       initialize: function () {
         this.input = this.$('#new-todo');
-        app.todoList.on('add', this.addAll, this);
-        app.todoList.on('reset', this.addAll, this);
-        app.todoList.fetch(); // Loads list from local storage
+        todoList.on('add', this.addAll, this);
+        todoList.on('reset', this.addAll, this);
+        //todolist.on('destroy', this.remove, this);
+        todoList.fetch(); // Loads list from local storage
       },
       events: {
         'keypress #new-todo': 'createTodoOnEnter'
@@ -107,16 +120,16 @@
           return;
           this.model.save();
         }
-        app.todoList.create(this.newAttributes());
+        todoList.create(this.newAttributes());
         this.input.val(''); // clean input box
       },
       addOne: function(todo){
-        var view = new app.TodoView({model: todo});
+        var view = new TodoView({model: todo});
         $('#todo-list').append(view.render().el);
       },
       addAll: function(){
         this.$('#todo-list').html(''); // clean the todo list
-        app.todoList.each(this.addOne, this);
+        todoList.each(this.addOne, this);
       },
       newAttributes: function(){
         return {
@@ -130,7 +143,7 @@
     // Initializers
     //--------------   
 
-    app.appView = new app.AppView(); 
+    var appView = new AppView(); 
 
   </script>
   
