@@ -42,7 +42,7 @@
 
 var TodoCollection = Backbone.Collection.extend({
   model: TodoModel,
-  url: 'http://localhost:5000/api/v1/todo/',
+  url: 'https://aqueous-cove-75719.herokuapp.com/api/v1/todo/',
   initialize: function(){
     this.on('delete', this.remove);
   }
