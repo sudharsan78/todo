@@ -23,6 +23,9 @@
     #todo-list .editing input.edit {
       display: inline; 
     }
+    #todo-list li.completed label {
+    text-decoration: line-through;
+}
   </style>  
 </head>
 <body>
@@ -45,7 +48,12 @@
   <script type="text/template" id="item-template">
     <div class="view">
       <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
+      <% if (completed) {%>
+      <strike><label><%= task %></label></strike>
+      <% } %>
+      <% if (!completed) {%>
       <label><%= task %></label>
+      <% } %>
       
       <input class="edit" value="<%= task %>">
 
