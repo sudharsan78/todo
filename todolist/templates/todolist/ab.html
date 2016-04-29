@@ -35,7 +35,7 @@
   <!-- Templates -->
   <script type="text/template" id="item-template">
     <div class="view">
-      <input class="toggle" type="checkbox">
+      <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>><%= completed %>
       <label><%= task %></label><button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
     </div>
   </script>  
@@ -43,7 +43,7 @@
   <!-- ========= -->
   <!-- Libraries -->
   <!-- ========= -->
-  <script src="{% static 'todolist/vendor/jquery.js' %}"></script>
+<script src="{% static 'todolist/vendor/jquery.js' %}"></script>
 <script src="{% static 'todolist/vendor/underscore.js' %}"></script>
 <script src="{% static 'todolist/vendor/backbone.js' %}"></script> 
 
@@ -53,7 +53,7 @@
   <script type="text/javascript">
     'use strict';
 
-     // create namespace for our app
+    
     
     //--------------
     // Models
@@ -62,7 +62,12 @@
       defaults: {
         task: '',
         completed: false
-      }
+      },
+    toggle: function() {
+      this.save({completed: !this.get("completed")});
+
+    }
+
     });
 
     //--------------
@@ -85,16 +90,23 @@
       tagName: 'li',
       template: _.template($('#item-template').html()),
 
-      initialize: function () {
+    initialize: function () {
+    	this.model.on('change', this.render,  this);
       	this.model.on('destroy', this.remove, this);
       },
 
-       events: {
-    "click #remove_task": 'taskremove',
+    events: {
+    	"click .toggle"   : "toggleDone",
+    	"click #remove_task": 'taskremove',
     },
       render: function(){
         this.$el.html(this.template(this.model.toJSON()));
         return this; // enable chained calls
+    },
+    toggleDone: function() {
+      //this.model.set({selected: true});
+      this.model.toggle();
+
     },
     taskremove: function(){
     	this.model.destroy();
@@ -109,11 +121,11 @@
         this.input = this.$('#new-todo');
         todoList.on('add', this.addAll, this);
         todoList.on('reset', this.addAll, this);
-        //todolist.on('destroy', this.remove, this);
         todoList.fetch(); // Loads list from local storage
       },
       events: {
-        'keypress #new-todo': 'createTodoOnEnter'
+        'keypress #new-todo': 'createTodoOnEnter',
+        
       },
       createTodoOnEnter: function(e){
         if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
@@ -137,8 +149,8 @@
           completed: false
         }
       }
+      
     });
-
     //--------------
     // Initializers
     //--------------   
