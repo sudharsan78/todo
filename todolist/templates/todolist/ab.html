@@ -14,6 +14,15 @@
     #todoapp ul {
       list-style-type: none;
     }
+    #todo-list input.edit {
+      display: none; 
+    }
+    #todo-list .editing label {
+      display: none;
+    }
+    #todo-list .editing input.edit {
+      display: inline; 
+    }
   </style>  
 </head>
 <body>
@@ -35,8 +44,12 @@
   <!-- Templates -->
   <script type="text/template" id="item-template">
     <div class="view">
-      <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>><%= completed %>
-      <label><%= task %></label><button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
+      <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
+      <label><%= task %></label>
+      
+      <input class="edit" value="<%= task %>">
+
+      <button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
     </div>
   </script>  
 
@@ -98,9 +111,13 @@
     events: {
     	"click .toggle"   : "toggleDone",
     	"click #remove_task": 'taskremove',
+    	'keypress .edit' : 'updateOnEnter',
+        'blur .edit' : 'close',
+        'dblclick label' : 'edit',
     },
       render: function(){
         this.$el.html(this.template(this.model.toJSON()));
+        this.input = this.$('.edit');
         return this; // enable chained calls
     },
     toggleDone: function() {
@@ -111,6 +128,23 @@
     taskremove: function(){
     	this.model.destroy();
     },
+    close: function(){
+        var value = this.input.val().trim();
+        if(value) {
+          this.model.save({task: value});
+        }
+        this.$el.removeClass('editing');
+    },
+    updateOnEnter: function(e){
+        if(e.which == 13){
+          this.close();
+        }
+    },
+    edit: function(){
+        this.$el.addClass('editing');
+        this.input.focus();
+      },
+
 
     });
 
