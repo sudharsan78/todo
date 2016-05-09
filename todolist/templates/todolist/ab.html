@@ -47,7 +47,12 @@
   <!-- Templates -->
   <script type="text/template" id="item-template">
     <div class="view">
+    <table style = "width:50%">
+    <tr>
+    <td style="align:left">
       <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
+    </td>
+    <td style="align:left">  
       <% if (completed) {%>
       <strike><label><%= task %></label></strike>
       <% } %>
@@ -56,8 +61,13 @@
       <% } %>
       
       <input class="edit" value="<%= task %>">
+    </td>
+    <td style="align:left">
 
       <button id = "remove_task" data-id=" + this.model.get('id')">Remove</button>
+    </td>
+    </tr>
+    </table>
     </div>
   </script>  
 
