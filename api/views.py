@@ -9,6 +9,7 @@ from rest_framework import views
 
 
 from rest_framework.views import APIView
+from rest_framework import filters
 
 
 
@@ -17,6 +18,9 @@ from rest_framework.views import APIView
 class TodoAPIView(generics.ListCreateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+    filter_backends = (filters.DjangoFilterBackend,filters.OrderingFilter,)
+    filter_fields=('id',)
+    ordering = ('-id',)
     def apiindex(request):
         return render(request, 'todolist/ab.html', queryset)
 
