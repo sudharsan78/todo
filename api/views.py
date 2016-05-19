@@ -62,24 +62,24 @@ class UserTaskList(generics.ListAPIView):
     filter_backends = (filters.OrderingFilter,)
     ordering = ('-id',)
     def get_queryset(self):
-        user = self.request.user
+        user = self.request.user.id
         return Todo.objects.filter(owner=user)
 
 
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'tasklist': reverse('task-list', request=request, format=format)
-    })
+# @api_view(['GET'])
+# def api_root(request, format=None):
+#     return Response({
+#         'users': reverse('user-list', request=request, format=format),
+#         'tasklist': reverse('task-list', request=request, format=format)
+#     })
 
 
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Todo.objects.all()
-    renderer_classes = (renderers.StaticHTMLRenderer,)
+# class SnippetHighlight(generics.GenericAPIView):
+#     queryset = Todo.objects.all()
+#     renderer_classes = (renderers.StaticHTMLRenderer,)
 
-    def get(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet)
+#     def get(self, request, *args, **kwargs):
+#         snippet = self.get_object()
+#         return Response(snippet)
 
 
