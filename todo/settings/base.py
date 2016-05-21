@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'todolist.apps.TodoListConfig',
     'django.contrib.admin',
     'django.contrib.auth',
