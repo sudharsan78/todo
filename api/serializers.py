@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from todolist.models import Todo
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 class TodoSerializer(serializers.ModelSerializer):
@@ -12,6 +13,8 @@ class TodoSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     tasklist = serializers.PrimaryKeyRelatedField(many=True, queryset=Todo.objects.all())
     owner = serializers.ReadOnlyField(source='owner.username')
+    for username in User.objects.all():
+    	Token.objects.get_or_create(user=username)
     class Meta:
         model = User
         fields = ('id', 'username', 'tasklist','owner')
