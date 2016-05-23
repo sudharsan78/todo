@@ -13,8 +13,8 @@ class TodoSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     tasklist = serializers.PrimaryKeyRelatedField(many=True, queryset=Todo.objects.all())
     owner = serializers.ReadOnlyField(source='owner.username')
-    for username in User.objects.all():
-    	Token.objects.get_or_create(user=username)
+    # for username in User.objects.all():
+    # 	Token.objects.get_or_create(user=username)
     class Meta:
         model = User
         fields = ('id', 'username', 'tasklist','owner')
